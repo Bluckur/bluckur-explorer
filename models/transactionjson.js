@@ -1,5 +1,5 @@
 module.exports = {
-    sender: String,
+    nder: String,
     recipient: String,
     amount: String,
     type: String,

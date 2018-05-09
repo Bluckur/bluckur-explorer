@@ -3,6 +3,6 @@ module.exports = {
     previoushash: String,
     validator: String,
     timestamp: String,
-    reward: String,
-    version: String
+    reward: Number,
+    version: Number
 }
