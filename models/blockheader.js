@@ -1,11 +1,5 @@
 var mongoose = require('mongoose');
-var BlockHeaderSchema = new mongoose.Schema({
-    hash: String,
-    previoushash: String,
-    validator: String,
-    timestamp: String,
-    reward: String,
-    version: String
-});
+var blockheaderjson = require('./blockheaderjson');
+var BlockHeaderSchema = new mongoose.Schema(blockheaderjson);
 mongoose.model('BlockHeader', BlockHeaderSchema);
 module.exports = mongoose.model('Blockheader');

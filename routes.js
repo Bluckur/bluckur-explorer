@@ -1,6 +1,6 @@
 var express = require('express');
 var blockController = require('./controllers/blockcontroller');
-var chainController = require('./controllers/chaincontroller');
+//var chainController = require('./controllers/chaincontroller');
 var transactionController = require('./controllers/transactioncontroller');
 
 var router = express.Router();
