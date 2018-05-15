@@ -1,6 +1,6 @@
-const Transaction = require('../models/transaction');
+const Transaction = require('../models/mongooseTransaction');
 
-
+/* TODO: Catch undefined errors on missing parameters*/
 
 /**
  * Retrieve the transactions of a specified wallet, which can be the both sender and recipient
