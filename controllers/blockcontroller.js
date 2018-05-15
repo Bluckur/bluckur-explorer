@@ -1,4 +1,6 @@
-const Block = require('../models/block');
+const Block = require('../models/mongooseBlock');
+
+/* TODO: Catch undefined errors on missing parameters*/
 
 /**
  * Retrieve a specific block identified by the id
