@@ -7,8 +7,14 @@ var router = express.Router();
 /**
  * Routing of transaction requests
  */
-router.route('/transactions/:sender').get(transactionController.getTransaction);
-router.route('/transaction/:id').get(transactionController.getTransactionById);
+router.route('/transactions/:wallet').get(transactionController.getTransactionsByWallet);
+router.route('/transactions/from/:wallet').get(transactionController.getTransactionsBySender);
+router.route('/transactions/to/:wallet').get(transactionController.getTransactionsByRecipient);
+router.route('/transactions/from/:sender/to/:recipient').get(transactionController.getTransactionsFromTo);
+router.route('/transactions/period/:fromdate/:todate').get(transactionController.getTransactionsByPeriod);
+router.route('/transactions/date/:date').get(transactionController.getTransactionsByDate);
+router.route('/transactions/amount/:low/:high').get(transactionController.getTransactionsByAmount);
+router.route('/transactions/amount/:low').get(transactionController.getTransactionsByAmount);
 router.route('/transactions').get(transactionController.getAllTransactions);
 router.route('/transaction').post(transactionController.addTransaction);
 
