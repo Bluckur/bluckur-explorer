@@ -44,23 +44,8 @@ const getTransactionsBySender = function(req, res) {
         });
 };
 
-
 /**
- * Retrieve a specific transaction identified by the id
- * @param {*} req 
- * @param {*} res 
- */
-const getTransactionById = function(req, res) {
-    Transaction.find().where('id').equals(req.params.id).then((data) => {
-            res.status(200).send(JSON.stringify({ "transactions": data }, undefined, 2))
-        })
-        .catch((e) => {
-            res.status(400).send(e);
-        });
-};
-
-/**
- * Retrieve the transactions of a specified wallet, which can be the both sender and recipient
+ * Retrieve the transactions from a specified sender to a specified recipient
  * @param {*} req 
  * @param {*} res 
  */
@@ -74,7 +59,7 @@ const getTransactionsFromTo = function(req, res) {
 };
 
 /**
- * 
+ * return transactions matching the specified period, fromdate and todate 
  * @param {*} req 
  * @param {*} res 
  */
@@ -88,7 +73,7 @@ const getTransactionsByPeriod = function(req, res) {
 };
 
 /**
- * 
+ * return transactions matching the specified date 
  * @param {*} req 
  * @param {*} res 
  */
@@ -102,7 +87,7 @@ const getTransactionsByDate = function(req, res) {
 };
 
 /**
- * 
+ * return transactions matching the specified amount range, low and high
  * @param {*} req 
  * @param {*} res 
  */
