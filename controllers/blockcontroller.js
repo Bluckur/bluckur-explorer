@@ -5,9 +5,9 @@ const Block = require('../models/block');
  * @param {*} req 
  * @param {*} res 
  */
-const getBlockById = function(req, res) {
-    Block.find().where('id').equals(req.params.id).then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+const getBlockByNumber = function(req, res) {
+    Block.findOne({}, { _id: 0, __v: 0 }).where('header.blockNumber').equals(req.params.number).then((data) => {
+            res.status(200).send(JSON.stringify({ "block": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -20,8 +20,8 @@ const getBlockById = function(req, res) {
  * @param {*} res 
  */
 const getBlocksByWallet = function(req, res) {
-    Block.find().where('header.validator').equals(req.params.wallet).then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+    Block.find({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).where('header.validator').equals(req.params.wallet).then((data) => {
+            res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -34,8 +34,8 @@ const getBlocksByWallet = function(req, res) {
  * @param {*} res 
  */
 const getBlockByHash = function(req, res) {
-    Block.find().where('header.blockHash').equals(req.params.hash).then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+    Block.findOne({}, { _id: 0, __v: 0 }).where('header.blockHash').equals(req.params.hash).then((data) => {
+            res.status(200).send(JSON.stringify({ "block": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -47,9 +47,9 @@ const getBlockByHash = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-const getBlockByDate = function(req, res) {
-    Block.find().where('header.timeStamp').equals(Date.parse(req.params.date)).then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+const getBlocksByDate = function(req, res) {
+    Block.find({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).where('header.timeStamp').equals(req.params.date).then((data) => {
+            res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -62,8 +62,8 @@ const getBlockByDate = function(req, res) {
  * @param {*} res 
  */
 const getBlocksByPeriod = function(req, res) {
-    Block.find({ 'header.timeStamp': { $gt: req.params.fromdate, $lt: req.params.todate } }).then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+    Block.find({ "header": { $ne: null }, 'header.timeStamp': { $gt: req.params.fromdate, $lt: req.params.todate } }, { 'header': 1, _id: 0 }).then((data) => {
+            res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -76,9 +76,10 @@ const getBlocksByPeriod = function(req, res) {
  * @param {*} res 
  */
 const getNextBlock = function(req, res) {
-    Block.find().where('header.blockHash').equals(req.params.hash).then((data) => {
-        Block.find().where('header.blockNumber').equals(data.header.blockNumber + 1).then((data) => {
-                res.status(200).send(JSON.stringify(data, undefined, 2))
+    Block.findOne().where('header.blockHash').equals(req.params.hash).then((data) => {
+        console.log(data);
+        Block.findOne({}, { _id: 0, __v: 0 }).where('header.blockNumber').equals(data.header.blockNumber + 1).then((data) => {
+                res.status(200).send(JSON.stringify({ "block": data }, undefined, 2))
             })
             .catch((e) => {
                 res.status(400).send(e);
@@ -92,9 +93,9 @@ const getNextBlock = function(req, res) {
  * @param {*} res 
  */
 const getNextBlocks = function(req, res) {
-    Block.find().where('header.blockHash').equals(req.params.hash).then((data) => {
+    Block.findOne({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).where('header.blockHash').equals(req.params.hash).then((data) => {
         Block.find({ 'header.blockNumber': { $gte: data.header.blockNumber } }).then((data) => {
-                res.status(200).send(JSON.stringify(data, undefined, 2))
+                res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
             })
             .catch((e) => {
                 res.status(400).send(e);
@@ -108,9 +109,9 @@ const getNextBlocks = function(req, res) {
  * @param {*} res 
  */
 const getPreviousBlock = function(req, res) {
-    Block.find().where('header.blockHash').equals(req.params.hash).then((data) => {
+    Block.findOne({}, { _id: 0, __v: 0 }).where('header.blockHash').equals(req.params.hash).then((data) => {
         Block.find().where('header.blockNumber').equals(data.header.blockNumber - 1).then((data) => {
-                res.status(200).send(JSON.stringify(data, undefined, 2))
+                res.status(200).send(JSON.stringify({ "block": data }, undefined, 2))
             })
             .catch((e) => {
                 res.status(400).send(e);
@@ -124,8 +125,8 @@ const getPreviousBlock = function(req, res) {
  * @param {*} res 
  */
 const getBlocks = function(req, res) {
-    Block.find().then((data) => {
-            res.status(200).send(JSON.stringify(data, undefined, 2))
+    Block.find({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).then((data) => {
+            res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
         })
         .catch((e) => {
             res.status(400).send(e);
@@ -150,10 +151,10 @@ const addBlock = function(req, res) {
 }
 
 module.exports = {
-    getBlockById,
+    getBlockByNumber,
     getBlocksByPeriod,
-    getBlockByDate,
-    getBlocksByHash,
+    getBlocksByDate,
+    getBlockByHash,
     getBlocksByWallet,
     getPreviousBlock,
     getNextBlock,

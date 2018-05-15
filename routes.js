@@ -1,6 +1,5 @@
 var express = require('express');
 var blockController = require('./controllers/blockcontroller');
-//var chainController = require('./controllers/chaincontroller');
 var transactionController = require('./controllers/transactioncontroller');
 
 var router = express.Router();
@@ -16,14 +15,14 @@ router.route('/transaction').post(transactionController.addTransaction);
 /**
  * Routing of block requests
  */
-router.route('/block/byid/:id').get(blockController.getBlockById);
-router.route('/block/byhash/:hash').get(blockController.getBlocksByHash);
+router.route('/block/bynumber/:number').get(blockController.getBlockByNumber);
+router.route('/block/byhash/:hash').get(blockController.getBlockByHash);
 router.route('/block/previous/:hash').get(blockController.getPreviousBlock);
 router.route('/block/next/:hash').get(blockController.getNextBlock);
 router.route('/blocks/next/:hash').get(blockController.getNextBlocks);
-router.route('/blocks/owner/:wallet').get(blockController.getBlocks);
+router.route('/blocks/wallet/:wallet').get(blockController.getBlocks);
 
-router.route('/blocks/date/:date').get(blockController.getBlockByDate);
+router.route('/blocks/date/:date').get(blockController.getBlocksByDate);
 router.route('/blocks/period/:fromdate/:todate').get(blockController.getBlocksByPeriod);
 
 router.route('/blocks').get(blockController.getBlocks);

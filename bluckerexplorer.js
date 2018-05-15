@@ -27,4 +27,4 @@ app.use('/api', routes);
  */
 app.listen(port);
 
-console.log('todo list RESTful API server started on: ' + port);
+console.log('Blucker-Explorer RESTful API server started on: ' + port);
