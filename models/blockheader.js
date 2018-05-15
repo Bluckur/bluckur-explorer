@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var blockheaderjson = require('./blockheaderjson');
-var BlockHeaderSchema = new mongoose.Schema(blockheaderjson);
+var blueprints = require('bluckur-models');
+var BlockHeaderSchema = new mongoose.Schema(blueprints.blockHeaderBlueprint);
 mongoose.model('BlockHeader', BlockHeaderSchema);
 module.exports = mongoose.model('Blockheader');
