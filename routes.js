@@ -26,10 +26,10 @@ router.route('/block/byhash/:hash').get(blockController.getBlockByHash);
 router.route('/block/previous/:hash').get(blockController.getPreviousBlock);
 router.route('/block/next/:hash').get(blockController.getNextBlock);
 router.route('/blocks/next/:hash').get(blockController.getNextBlocks);
-router.route('/blocks/wallet/:wallet').get(blockController.getBlocks);
+router.route('/blocks/wallet/:wallet').get(blockController.getBlocksByWallet);
 
 router.route('/blocks/date/:date').get(blockController.getBlocksByDate);
-router.route('/blocks/period/:fromdate/:todate').get(blockController.getBlocksByPeriod);
+router.route('/blocks/period/:firstdate/:seconddate').get(blockController.getBlocksByPeriod);
 
 router.route('/blocks').get(blockController.getBlocks);
 router.route('/block').post(blockController.addBlock);
