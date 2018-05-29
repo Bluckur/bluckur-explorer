@@ -84,12 +84,16 @@ const getBlockByHash = function(req, res) {
  * @param {*} res 
  */
 const getBlocksByDate = function(req, res) {
-    Block.find({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).where('header.timeStamp').equals(req.params.date).then((data) => {
-            res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
-        })
-        .catch((e) => {
-            res.status(400).send(e);
-        });
+    if (isDate(req.params.date)) {
+        Block.find({ "header": { $ne: null } }, { 'header': 1, _id: 0 }).where('header.timeStamp').equals(req.params.date).then((data) => {
+                res.status(200).send(JSON.stringify({ "blocks": data }, undefined, 2))
+            })
+            .catch((e) => {
+                res.status(400).send(e);
+            });
+    } else {
+        res.status(400).send('The given integer value does not represent a valid date');
+    }
 };
 
 /**
